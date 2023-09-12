@@ -1,0 +1,86 @@
+version: '3'
+
+services:
+ 
+ mariadb:
+  container_name: mariadb
+  build:
+   context: requirements/mariadb
+   dockerfile: Dockerfile
+   args:
+        - MYSQL_DB=${MYSQL_DATABASE}
+        - MYSQL_U=${MYSQL_USER}
+        - MYSQL_P=${MYSQL_PASSWORD}
+      #  - MYSQL_RP=${MYSQL_ROOT_PASSWORD}
+  env_file: .env
+  volumes:
+   - mariadb:/var/lib/mysql
+  networks:
+   - inception
+  expose:
+   - "3306"
+    #restart: unless-stopped
+
+ nginx:
+  container_name: nginx
+  build:
+   context: requirements/nginx
+   dockerfile: Dockerfile
+  depends_on: 
+   - wordpress
+  env_file: .env
+  ports: 
+   - "443:443"
+  volumes:
+   - wordpress:/var/www/wordpress
+  networks:
+   - inception
+#  restart: on-faillure
+
+ wordpress:
+  container_name: wordpress
+  build:
+   context: requirements/wordpress
+   dockerfile: Dockerfile
+   # args:
+     #   - MYSQL_DB=${MYSQL_DATABASE}
+     #   - MYSQL_U=${MYSQL_USER}
+     #   - MYSQL_P=${MYSQL_PASSWORD}
+  env_file: .env
+  depends_on:
+   - mariadb
+  expose: 
+   - "9000"
+  volumes:
+   - wordpress:/var/www/wordpress
+  networks:
+   - inception
+# restart: on-faillure
+
+volumes:   
+  wordpress:
+  mariadb:
+
+#   driver: local
+#   driver_opts:
+#    type: 'none'
+#    o: 'bind'
+#    device: '/home/unknow/42work/inception/srcs/requirements/wordpress'
+#  mariadb:
+#   driver: local
+#   driver_opts:
+#    type: 'none'
+#    o: 'bind'
+#    device: '/home/unknow/42work/inception/srcs/requirements/mariadb'
+#
+
+
+networks:
+  inception:
+   driver: bridge
+#   name: inception
+#   ipam:
+#    driver: default
+#    config:
+#     - subnet: 172.18.0.0/16
+#       gateway: 172.18.0.1
