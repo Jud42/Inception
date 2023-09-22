@@ -14,12 +14,12 @@ COPY conf/init.sql /data/init.sql
 ARG MYSQL_DB
 ARG MYSQL_U
 ARG MYSQL_P
-ARG MYSQL_RP
+#ARG MYSQL_RP
 
 RUN sed -i "s/db/$MYSQL_DB/g" /data/init.sql
 RUN sed -i "s/user/$MYSQL_U/g" /data/init.sql
 RUN sed -i "s/pass/$MYSQL_P/g" /data/init.sql
-RUN sed -i "s/root_pass/$MYSQL_RP/g" /data/init.sql
+#RUN sed -i "s/root_pass/$MYSQL_RP/g" /data/init.sql
 
 #if you dont specify the user in configuration
 # by default root will used

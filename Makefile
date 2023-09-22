@@ -6,6 +6,7 @@ build:
 	docker-compose -f $(DIR_SRCS) build
 
 up:
+	./.script_env.sh
 	docker-compose -f $(DIR_SRCS) up
 
 down:
@@ -21,14 +22,13 @@ rmvol:
 	docker volume rm $(VOLUMES)
 
 
-
 destroy:
 	docker-compose -f $(DIR_SRCS) destroy
 
 rm_all:
-	docker rm $$(docker ps -aq)
-	docker rmi -f $$(docker image ls -aq)
-	docker volume rm $$(docker volume ls)
+	docker rm $$(docker container ls -aq)
+	docker rmi  $$(docker image ls -aq)
+	docker volume rm $$(docker volume ls -q)
 
 re: stop rm_all build
 

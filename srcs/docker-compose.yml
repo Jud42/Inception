@@ -14,7 +14,7 @@ services:
       #  - MYSQL_RP=${MYSQL_ROOT_PASSWORD}
   env_file: .env
   volumes:
-   - mariadb:/var/lib/mysql
+   - database:/var/lib/mysql
   networks:
    - inception
   expose:
@@ -57,27 +57,25 @@ services:
    - inception
 # restart: on-faillure
 
-volumes:   
-  wordpress:
-  mariadb:
-
-#   driver: local
-#   driver_opts:
-#    type: 'none'
-#    o: 'bind'
-#    device: '/home/unknow/42work/inception/srcs/requirements/wordpress'
-#  mariadb:
-#   driver: local
-#   driver_opts:
-#    type: 'none'
-#    o: 'bind'
-#    device: '/home/unknow/42work/inception/srcs/requirements/mariadb'
-#
+volumes:
+ wordpress:
+  name: wordpress
+  driver_opts:
+   type: 'none'
+   o: 'bind'
+   device: '/home/${USER}/data/wordpress'
+ database:
+  name: database
+  driver_opts:
+   type: 'none'
+   o: 'bind'
+   device: '/home/${USER}/data/database'
 
 
 networks:
   inception:
    driver: bridge
+
 #   name: inception
 #   ipam:
 #    driver: default

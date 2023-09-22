@@ -13,7 +13,6 @@ download_wp () {
 
 	cd /var/www/wordpress
 	wp core download --allow-root 
-	#--path="wor"
 	# setup www.conf 
 	find / -name www.conf -type f \
 	-exec sed -i -e 's/\b;clear_env = [^ ]*/clear_env = no/g' \
@@ -23,13 +22,13 @@ download_wp () {
 setup_wp () {
 	
 	wp config create --allow-root \
-		--dbname="DB_INCEPTION" \
-		--dbuser="rmamison" \
-		--dbpass="password" \
+		--dbname="${MYSQL_DATABASE}" \
+		--dbuser="${MYSQL_USER}" \
+		--dbpass="${MYSQL_PASSWORD}" \
 		--dbhost="mariadb:3306" 
 		#--path="wordpress"
 
-	wp core install --url="localhost/wp-admin" \
+	wp core install --url="https://localhost" \
 		--title="test_site" \
 		--admin_user="test_user" \
 		--admin_password="test_password" \
