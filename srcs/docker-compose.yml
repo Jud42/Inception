@@ -4,6 +4,7 @@ services:
  
  mariadb:
   container_name: mariadb
+  image: mariadb
   build:
    context: requirements/mariadb
    dockerfile: Dockerfile
@@ -19,10 +20,11 @@ services:
    - inception
   expose:
    - "3306"
-    #restart: unless-stopped
+  restart: unless-stopped
 
  nginx:
   container_name: nginx
+  image: nginx
   build:
    context: requirements/nginx
    dockerfile: Dockerfile
@@ -35,10 +37,11 @@ services:
    - wordpress:/var/www/wordpress
   networks:
    - inception
-#  restart: on-faillure
+  # restart: on-failure
 
  wordpress:
   container_name: wordpress
+  image: wordpress
   build:
    context: requirements/wordpress
    dockerfile: Dockerfile
@@ -55,7 +58,7 @@ services:
    - wordpress:/var/www/wordpress
   networks:
    - inception
-# restart: on-faillure
+  # restart: on-failure
 
 volumes:
  wordpress:
@@ -75,10 +78,3 @@ volumes:
 networks:
   inception:
    driver: bridge
-
-#   name: inception
-#   ipam:
-#    driver: default
-#    config:
-#     - subnet: 172.18.0.0/16
-#       gateway: 172.18.0.1

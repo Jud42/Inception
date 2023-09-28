@@ -1,36 +1,28 @@
-.PHONY: help build rmvol up down stop rm destroy rm_all re 
+.PHONY: build up down rm_all re 
 
 DIR_SRCS	= ./srcs/docker-compose.yml
+PATH_DATABASE	= ~/data/database
+PATH_WORDPRESS	= ~/data/wordpress
+
 
 build:
 	docker-compose -f $(DIR_SRCS) build
-
 up:
 	./.script_env.sh
-	docker-compose -f $(DIR_SRCS) up
+	docker-compose -f $(DIR_SRCS) up --build
 
 down:
-	docker-compose -f $(DIR_SRCS) down
+	docker-compose -f $(DIR_SRCS) down -v
 
-stop:
-	docker-compose -f $(DIR_SRCS) stop
-
-rm:
-	docker-compose -f $(DIR_SRCS) rm
-
-rmvol:
-	docker volume rm $(VOLUMES)
-
-
-destroy:
-	docker-compose -f $(DIR_SRCS) destroy
-
-rm_all:
-	docker rm $$(docker container ls -aq)
+rm_all: 
+	$(MAKE) down;\
+	sudo rm -rf $(PATH_DATABASE);\
+	sudo rm -rf $(PATH_WORDPRESS);\
+	rm srcs/.env;\
 	docker rmi  $$(docker image ls -aq)
-	docker volume rm $$(docker volume ls -q)
 
-re: stop rm_all build
+re: rm_all 
+	$(MAKE) up
 
 help:
 	@echo "Available commands:"
@@ -38,8 +30,20 @@ help:
 	@echo "  make build    : Build the project or container images"
 	@echo "  make up       : Start the containers using docker-compose"
 	@echo "  make down     : Stop and remove the containers"
-	@echo "  make stop     : Stop the running containers"
-	@echo "  make rm       : Remove stopped containers"
-	@echo "  make destroy  : Stop and remove all containers and volumes"
-
-
+	@echo "  make rm_all   : Stop and remove containers & volumes"
+	@echo "  make re       : re-build and run services"
+#	@echo "  make stop     : Stop the running containers"
+#	@echo "  make rm       : Remove stopped containers"
+#	@echo "  make destroy  : Stop and remove all containers and volumes"
+#
+#IMAGE_BASE	= nginx
+#run:
+#	docker-compose -f $(DIR_SRCS) run $(IMAGE_BASE)
+#stop:
+#	docker-compose -f $(DIR_SRCS) stop
+#rm:
+#	docker-compose -f $(DIR_SRCS) rm
+#rmvol:
+#	docker volume rm $(VOLUMES)
+#destroy:
+#	docker-compose -f $(DIR_SRCS) destroy

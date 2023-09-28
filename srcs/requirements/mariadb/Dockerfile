@@ -6,7 +6,7 @@ RUN apk add --no-cache mariadb mariadb-client vim
 
 RUN mkdir data && mkdir -p /var/run/mysqld \
  && chown -R mysql:mysql /var/run/mysqld \
- && chmod 777 /var/run/mysqld 
+ && chmod 777 /var/run/mysqld && chmod 755 /var/lib/mysql 
 
 COPY conf/my.cnf /etc/my.cnf
 COPY conf/init.sql /data/init.sql

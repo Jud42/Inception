@@ -30,10 +30,16 @@ setup_wp () {
 
 	wp core install --url="https://localhost" \
 		--title="test_site" \
-		--admin_user="test_user" \
-		--admin_password="test_password" \
-		--admin_email="judiismals@gmail.ch"
+		--admin_user="first_user" \
+		--admin_password="first_password" \
+		--admin_email="first@gmail.ch"
 		#--path="wordpress"
+}
+
+create_other_user() {
+
+	wp user create second_user  second@gmail.ch --role='author' \
+		--user_pass='second_password'
 }
 
 deamon_process () { 
@@ -45,6 +51,7 @@ main () {
 	download_wp_cli
 	download_wp
 	setup_wp
+	create_other_user
 	deamon_process
 }
 
