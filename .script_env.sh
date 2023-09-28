@@ -37,6 +37,6 @@ else
     add_domain_name
 fi
 
-mkdir -p /home/$USER/data/wordpress
-mkdir -p /home/$USER/data/database
+mkdir -p /home/$user/data/wordpress
+mkdir -p /home/$user/data/database
 

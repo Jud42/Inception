@@ -1,0 +1,5 @@
+# script ignore
+.*
+
+# env ignore
+./srcs/*.

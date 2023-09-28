@@ -66,13 +66,13 @@ volumes:
   driver_opts:
    type: 'none'
    o: 'bind'
-   device: '/home/${USER}/data/wordpress'
+   device: '/home/rmamison/data/wordpress'
  database:
   name: database
   driver_opts:
    type: 'none'
    o: 'bind'
-   device: '/home/${USER}/data/database'
+   device: '/home/rmamison/data/database'
 
 
 networks:

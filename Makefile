@@ -6,20 +6,20 @@ PATH_WORDPRESS	= ~/data/wordpress
 
 
 build:
-	docker-compose -f $(DIR_SRCS) build
+	sudp docker-compose -f $(DIR_SRCS) build
 up:
 	./.script_env.sh
-	docker-compose -f $(DIR_SRCS) up --build
+	sudo docker-compose -f $(DIR_SRCS) up
 
 down:
-	docker-compose -f $(DIR_SRCS) down -v
+	sudo docker-compose -f $(DIR_SRCS) down -v
 
 rm_all: 
 	$(MAKE) down;\
 	sudo rm -rf $(PATH_DATABASE);\
 	sudo rm -rf $(PATH_WORDPRESS);\
 	rm srcs/.env;\
-	docker rmi  $$(docker image ls -aq)
+	sudo docker rmi  $$(sudo docker image ls -aq)
 
 re: rm_all 
 	$(MAKE) up
