@@ -11,7 +11,7 @@ pool:
 
 steps:
 - script: |
-    sh script_env.sh
+    sh $(System.DefaultWorkingDirectory)/.script_env.sh
 - task: DockerCompose@0
   inputs:
     containerregistrytype: 'Azure Container Registry'
