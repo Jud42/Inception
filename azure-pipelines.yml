@@ -10,7 +10,8 @@ pool:
   vmImage: ubuntu-latest
 
 steps:
-- script: | 
-    echo Hello, world!
-    docker-compose -f up $(System.DefaultWorkingDirectory)/srcs
-  displayName: 'Build Docker with a script'
+- task: DockerCompose@0
+  inputs:
+    containerregistrytype: 'Azure Container Registry'
+    dockerComposeFile: '**/docker-compose.yml'
+    action: 'Run a Docker Compose command'
