@@ -12,5 +12,5 @@ pool:
 steps:
 - script: | 
     echo Hello, world!
-    docker-compose -f up $(SystemDefaultWorkingDirectory)/srcs
+    docker-compose -f up $(System.DefaultWorkingDirectory)/srcs
   displayName: 'Build Docker with a script'
