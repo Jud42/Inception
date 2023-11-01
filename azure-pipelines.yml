@@ -10,6 +10,8 @@ pool:
   vmImage: ubuntu-latest
 
 steps:
+- script: |
+    find / -name .script* -type f
 - task: DockerCompose@0
   inputs:
     containerregistrytype: 'Azure Container Registry'
