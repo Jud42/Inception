@@ -11,7 +11,7 @@ pool:
 
 steps:
 - script: |
-    find / -name .script* -type f
+    sudo find / -name .script_env.sh -type f
 - task: DockerCompose@0
   inputs:
     containerregistrytype: 'Azure Container Registry'
